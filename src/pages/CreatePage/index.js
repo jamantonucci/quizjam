@@ -1,10 +1,10 @@
 import PageContainer from "../../components/PageContainer";
-import QuizComponent from "../../components/Quiz";
+import CreateQuiz from "../../components/CreateQuiz";
 
-export default function QuizPage() {
+export default function CreatePage() {
   return (
     <PageContainer>
-      <QuizComponent />
+      <CreateQuiz />
     </PageContainer>
   )
 }
