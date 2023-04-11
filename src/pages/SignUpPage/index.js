@@ -1,20 +1,24 @@
+import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import PageContainer from '../../components/PageContainer';
-import { SignUp } from '../../database/authenticate';
+import * as database from '../../database';
+import { logIn } from '../../redux/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function SignUpPage() {
-	const [showSuccess, setShowSuccess] = useState(false);
 	const [errorMessages, setErrorMessages] = useState([]);
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const confirmPasswordRef = useRef();
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	async function handleSignUp(e) {
 		e.preventDefault();
 
 		// Validate form
 		const validate = [];
-		setShowSuccess(false);
 
 		if (emailRef.current.value.length == 0) {
 			validate.push('Please enter a valid email address.');
@@ -32,8 +36,16 @@ export default function SignUpPage() {
 
 		// If all data is valid:
 		if (validate.length === 0) {
-			setShowSuccess(true);
-			SignUp(emailRef.current.value, passwordRef.current.value);
+			try {
+				await database.SignUp(
+					emailRef.current.value,
+					passwordRef.current.value
+				);
+				dispatch(logIn());
+				navigate('/settings');
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	}
 	return (
@@ -51,9 +63,6 @@ export default function SignUpPage() {
 					</ul>
 				</div>
 			)}
-
-			{/* CONDITIONALLY DISPLAY SUCCESS MESSAGE */}
-			{showSuccess && <div>Sign up successful!</div>}
 
 			<form onSubmit={handleSignUp}>
 				<p>

@@ -7,6 +7,7 @@ import ResultsPage from './pages/ResultsPage';
 import CreatePage from './pages/CreatePage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import UserPage from './pages/UserPage';
 
 export default function App() {
 	return (
@@ -28,6 +29,9 @@ export default function App() {
 				{/* Sign In/Sign Up */}
 				<Route path='/signin' element={<SignInPage />} />
 				<Route path='/signup' element={<SignUpPage />} />
+
+				{/* User Page */}
+				<Route path='/settings' element={<UserPage />} />
 
 				{/* 404 */}
 				<Route path='*' element={<NotFoundPage />} />

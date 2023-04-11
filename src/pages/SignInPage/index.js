@@ -1,16 +1,29 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import PageContainer from '../../components/PageContainer';
 import { useRef, useState } from 'react';
-import { SignIn } from '../../database/authenticate';
+import * as database from '../../database';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../../redux/userSlice';
 
 export default function SignInPage() {
-	const [showSuccess, setShowSuccess] = useState(false);
 	const [errorMessages, setErrorMessages] = useState([]);
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
-	async function handleSignIn(e) {
-		SignIn(emailRef.current.value, passwordRef.current.value);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	async function handleSignIn (e) {
+		e.preventDefault();
+
+		try {
+			await database.SignIn(emailRef.current.value, passwordRef.current.value);
+			dispatch(logIn());
+			navigate('/settings');
+
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	return (
@@ -29,9 +42,6 @@ export default function SignInPage() {
 					</ul>
 				</div>
 			)}
-
-			{/* CONDITIONALLY DISPLAY SUCCESS MESSAGE */}
-			{showSuccess && <div>Sign up successful!</div>}
 
 			<form onSubmit={handleSignIn}>
 				<p>
