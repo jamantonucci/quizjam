@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import uuid from 'react-uuid';
+import ValidateNewQuiz from './validate';
 
 export default function CreateQuiz() {
 	const [title, setTitle] = useState('');
@@ -49,6 +50,30 @@ export default function CreateQuiz() {
 			],
 		},
 	]);
+	const [errorMessages, setErrorMessages] = useState([]);
+	const [showSuccess, setShowSuccess] = useState(false);
+
+	// HANDLING FORM SUBMISSION
+	const handleFormSubmit = (event) => {
+		event.preventDefault();
+		setShowSuccess(false);
+
+		const quiz = {
+			id: uuid(),
+			title,
+			results,
+			questions
+		}
+
+		// Validate data
+		const validate = ValidateNewQuiz(quiz);
+		setErrorMessages(validate);
+
+		if (validate.length === 0) {
+			setShowSuccess(true);
+		}
+
+	}
 
 	// FUNCTIONS FOR HANDLING RESULTS
 	const handleAddResult = (event) => {
@@ -113,7 +138,25 @@ export default function CreateQuiz() {
 	return (
 		<>
 			<h1>Create New Quiz</h1>
-			<form>
+
+			{/* CONDITIONALLY DISPLAY ERROR MESSAGES */}
+			{errorMessages.length > 0 && (
+				<div>Something went wrong:
+					<ul>
+						{errorMessages.map((error, index) => (
+							<li key={index}>{error}</li>
+						))}
+					</ul>
+				</div>
+			)}
+
+			{/* CONDITIONALLY DISPLAY SUCCESS MESSAGE */}
+			{showSuccess && (
+				<div>Quiz created successfully!</div>
+			)}
+
+
+			<form onSubmit={handleFormSubmit}>
 				<h2>Basic Info</h2>
 				<div>
 					<label>
