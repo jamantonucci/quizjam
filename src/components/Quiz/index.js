@@ -12,6 +12,24 @@ export default function QuizComponent() {
   console.log(quiz);
 
   return (
-    <div>Quiz</div>
-  )
+    <div>
+      <h1>{quiz.title}</h1>
+      {/* Create the quiz questions with the Array.map() and loop over them */}
+      {quiz.questions.map((question) => (
+        <div key={question.id}>
+
+          <h3>{question.questionText}</h3>
+
+          {question.answers.map((answer) => (
+            <div key={answer.id}>
+              {/* Display an radio button and label for each answer of the question */}
+              <input type="radio" name={question.id} value={answer.id} />
+              <label htmlFor={answer.id}>{answer.answerText}</label>
+
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
 }
