@@ -30,6 +30,7 @@ export default function UserPage() {
 		e.preventDefault();
 
 		if (showChangeDisplayName) {
+			await database.ChangeDisplayName(displayName);
 			dispatch(changeDisplayName(displayName));
 			setShowChangeDisplayName(false);
 		} else {

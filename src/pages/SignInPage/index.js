@@ -17,8 +17,8 @@ export default function SignInPage() {
 		e.preventDefault();
 
 		try {
-			await database.SignIn(emailRef.current.value, passwordRef.current.value);
-			dispatch(logIn());
+			const user = await database.SignIn(emailRef.current.value, passwordRef.current.value);
+			dispatch(logIn(user.displayName));
 			navigate('/settings');
 
 		} catch (error) {

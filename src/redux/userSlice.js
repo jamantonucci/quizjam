@@ -7,9 +7,9 @@ export const userSlice = createSlice({
     loggedIn: false
   },
   reducers: {
-    logIn: (state) => {
+    logIn: (state, action) => {
       state.loggedIn = true;
-      state.username = 'Jam';
+      state.username = action.payload;
     },
     logOut: (state) => {
       state.loggedIn = false;

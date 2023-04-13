@@ -1,1 +1,1 @@
-export { SignIn, SignUp, SignOut } from './authenticate';
+export { SignIn, SignUp, SignOut, ChangeDisplayName } from './authenticate';
