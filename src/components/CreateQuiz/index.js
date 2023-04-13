@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import uuid from 'react-uuid';
 import ValidateNewQuiz from './validate';
+import * as database from '../../database';
 
 export default function CreateQuiz() {
 	const [title, setTitle] = useState('');
@@ -54,13 +55,16 @@ export default function CreateQuiz() {
 	const [showSuccess, setShowSuccess] = useState(false);
 
 	// HANDLING FORM SUBMISSION
-	const handleFormSubmit = (event) => {
+	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 		setShowSuccess(false);
+
+		const user = database.GetCurrentUserInfo();
 
 		const quiz = {
 			id: uuid(),
 			title,
+			author: user.id,
 			results,
 			questions
 		}
@@ -70,6 +74,7 @@ export default function CreateQuiz() {
 		setErrorMessages(validate);
 
 		if (validate.length === 0) {
+			await database.SaveQuizToDb(quiz);
 			setShowSuccess(true);
 		}
 
@@ -92,7 +97,6 @@ export default function CreateQuiz() {
 	const handleAddQuestion = (event) => {
 		event.preventDefault();
 		const newQuestion = {
-			id: uuid(),
 			questionText: '',
 			answers: [
 				{
@@ -101,7 +105,6 @@ export default function CreateQuiz() {
 					associatedResult: 0,
 				},
 				{
-					id: uuid(),
 					answerText: '',
 					associatedResult: 0,
 				},
@@ -154,6 +157,7 @@ export default function CreateQuiz() {
 			{showSuccess && (
 				<div>Quiz created successfully!</div>
 			)}
+
 
 
 			<form onSubmit={handleFormSubmit}>

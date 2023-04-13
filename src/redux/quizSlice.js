@@ -12,6 +12,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const testQuiz = {
   title: 'What colour are you?',
   author: 'QuizJam Official',
+  // TODO: Change to user ID so usernames can be pulled dynamically
   results: [
     {
       id: 1,

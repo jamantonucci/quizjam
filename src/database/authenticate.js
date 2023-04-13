@@ -42,4 +42,13 @@ async function ChangeDisplayName(displayName) {
 	}
 }
 
-export { SignUp, SignIn, SignOut, ChangeDisplayName };
+function GetCurrentUserInfo() {
+	const user = auth.currentUser;
+	const data = {
+		id: user.uid,
+		displayName: user.displayName
+	}
+	return data;
+}
+
+export { SignUp, SignIn, SignOut, ChangeDisplayName, GetCurrentUserInfo };

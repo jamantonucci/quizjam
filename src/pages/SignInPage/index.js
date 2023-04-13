@@ -18,7 +18,11 @@ export default function SignInPage() {
 
 		try {
 			const user = await database.SignIn(emailRef.current.value, passwordRef.current.value);
-			dispatch(logIn(user.displayName));
+			const userData = {
+				id: user.uid,
+				displayName: user.displayName
+			}
+			dispatch(logIn(userData));
 			navigate('/settings');
 
 		} catch (error) {
