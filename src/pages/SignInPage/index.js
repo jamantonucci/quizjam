@@ -23,6 +23,7 @@ export default function SignInPage() {
 
 		} catch (error) {
 			console.error(error);
+			setErrorMessages(error);
 		}
 	}
 

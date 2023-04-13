@@ -9,11 +9,18 @@ export const userSlice = createSlice({
   reducers: {
     logIn: (state) => {
       state.loggedIn = true;
-      state.username = 'JAM';
+      state.username = 'Jam';
+    },
+    logOut: (state) => {
+      state.loggedIn = false;
+      state.username = 'Guest';
+    },
+    changeDisplayName: (state, action) => {
+      state.username = action.payload;
     }
   }
 })
 
-export const { logIn } = userSlice.actions;
+export const { logIn, logOut, changeDisplayName } = userSlice.actions;
 
 export default userSlice.reducer;

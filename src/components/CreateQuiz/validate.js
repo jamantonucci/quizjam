@@ -12,7 +12,7 @@ export default function ValidateNewQuiz(quiz) {
   }
 
   quiz.results.forEach((result) => {
-    if (result.title == '' || result.desc == '') {
+    if (result.title === '' || result.desc === '') {
       validate.push('Results need both a title and a description.');
     }
   })

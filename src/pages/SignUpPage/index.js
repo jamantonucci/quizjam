@@ -20,7 +20,7 @@ export default function SignUpPage() {
 		// Validate form
 		const validate = [];
 
-		if (emailRef.current.value.length == 0) {
+		if (emailRef.current.value.length === 0) {
 			validate.push('Please enter a valid email address.');
 		}
 
