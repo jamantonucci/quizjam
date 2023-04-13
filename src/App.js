@@ -38,8 +38,7 @@ export default function App() {
 
 					{/* Quiz - Taking */}
 					<Route path='/quiz/:id' element={<QuizPage />} />
-					<Route path='/quiz/test' element={<QuizPage />} />
-					<Route path='/quiz/:id/result' element={<ResultsPage />} />
+					<Route path='/quiz/result/:id' element={<ResultsPage />} />
 
 					{/* Quiz - Creating */}
 					<Route path='/create' element={<CreatePage />} />

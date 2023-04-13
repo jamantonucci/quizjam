@@ -5,7 +5,8 @@ export const userSlice = createSlice({
   initialState: {
     username: 'guest',
     loggedIn: false,
-    id: ''
+    id: '',
+    quizInProgress: '',
   },
   reducers: {
     logIn: (state, action) => {
@@ -19,10 +20,13 @@ export const userSlice = createSlice({
     },
     changeDisplayName: (state, action) => {
       state.username = action.payload;
+    },
+    updateQuizInProgress: (state, action) => {
+      state.quizInProgress = action.payload;
     }
   }
 })
 
-export const { logIn, logOut, changeDisplayName } = userSlice.actions;
+export const { logIn, logOut, changeDisplayName, updateQuizInProgress } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,5 +1,8 @@
 import * as database from '../../database';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateQuizInProgress } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function QuizComponent({
 	id,
@@ -13,6 +16,8 @@ export default function QuizComponent({
 	const [isLoading, setIsLoading] = useState(false);
 	const [quizScore, setQuizScore] = useState([]);
 	const [quizInProgress, setQuizInProgress] = useState([]);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		(async () => {
@@ -75,7 +80,10 @@ export default function QuizComponent({
     const result = quizResults.reduce(function(prev, current) {
       return (prev.score > current.score) ? prev : current
     })
+		dispatch(updateQuizInProgress(id));
     console.log(result);
+
+		navigate('/quiz/result/' + result.id);
   };
 
 	return (
