@@ -37,11 +37,15 @@ export default function SignUpPage() {
 		// If all data is valid:
 		if (validate.length === 0) {
 			try {
-				await database.SignUp(
+				const user = await database.SignUp(
 					emailRef.current.value,
 					passwordRef.current.value
 				);
-				dispatch(logIn());
+				const userData = {
+					id: user.uid,
+					displayName: 'QuizJam User'
+				}
+				dispatch(logIn(userData));
 				navigate('/settings');
 			} catch (error) {
 				console.error(error);

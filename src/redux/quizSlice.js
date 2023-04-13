@@ -1,14 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Keiran: Here's the test data! I tried to make it look enough like a
-// real quiz that it'd be easy to tell if you were displaying
-// everything correctly.
-// 
-// Please note: the "associatedResult" property of the answer object
-// refers to the INDEX of the result - ie. the associatedResult of 'dogs'
-// is '1', which points to "blue".
-//
-// I thought using title might be too fickle.
 const testQuiz = {
   title: 'What colour are you?',
   author: 'QuizJam Official',
@@ -152,15 +143,15 @@ const testQuiz = {
 export const quizSlice = createSlice({
   name: 'quiz',
   initialState: {
+    quizzes: [],
     quiz: testQuiz,
   },
   reducers: {
-    testReducer: (state, action) => {
-      // this does nothing.
-      console.log('testReducer triggered');
+    setQuizzes: (state, action) => {
+      state.quizzes = action.payload;
     }
   }
 })
 
-export const { testReducer } = quizSlice.actions;
+export const { setQuizzes } = quizSlice.actions;
 export default quizSlice.reducer;

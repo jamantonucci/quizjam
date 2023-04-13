@@ -1,4 +1,4 @@
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from './config';
 
 async function SaveQuizToDb(quiz) {
@@ -15,4 +15,25 @@ async function SaveQuizToDb(quiz) {
   }
 }
 
-export { SaveQuizToDb };
+async function GetQuizzesFromDb() {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'quizzes'));
+    return processQuerySnapshot(querySnapshot);
+
+  } catch (error) {
+    console.error('Error loading quizzes:', error);
+  }
+}
+
+function processQuerySnapshot(querySnapshot) {
+  const data = [];
+  querySnapshot.forEach((doc) => {
+    data.push({
+      ...doc.data(),
+      id: doc.id
+    });
+  });
+  return data;
+}
+
+export { SaveQuizToDb, GetQuizzesFromDb };

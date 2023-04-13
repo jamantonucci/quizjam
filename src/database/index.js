@@ -1,2 +1,2 @@
-export { SignIn, SignUp, SignOut, ChangeDisplayName, GetCurrentUserInfo } from './authenticate';
-export { SaveQuizToDb } from './quizzes';
+export { SignIn, SignUp, SignOut, ChangeDisplayName, GetCurrentUserInfo, GetDisplayNameFromId } from './authenticate';
+export { SaveQuizToDb, GetQuizzesFromDb } from './quizzes';

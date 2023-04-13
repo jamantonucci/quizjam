@@ -1,7 +1,11 @@
 import PageContainer from '../../components/PageContainer';
 import { NavLink } from 'react-router-dom';
+import QuizPreview from '../../components/Quiz/QuizPreview';
+import { useSelector } from 'react-redux';
 
 export default function HomePage() {
+	let quizzes = useSelector((state) => state.quiz.quizzes);
+
 	return (
 		<PageContainer>
 			<div>
@@ -9,11 +13,12 @@ export default function HomePage() {
 				<NavLink to='/create'>Create New Quiz</NavLink>
 				<div>Create new quiz button</div>
 			</div>
-      <div>
-        <h2>Recommended Quizzes:</h2>
-        {/* TODO: Create quiz preview */}
-        <div>Quiz preview</div>
-      </div>
+				<div>
+					<h2>Recommended Quizzes:</h2>
+					{quizzes.map((quiz, index) => (
+						<QuizPreview key={index} {...quiz} />
+					))}
+				</div>
 		</PageContainer>
 	);
 }
