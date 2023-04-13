@@ -1,0 +1,27 @@
+$title-font: "Gloria Hallelujah", cursive;
+$body-font: "Roboto", sans-serif;
+
+$primary-color: #1A1B41;
+$secondary-color: #CC3363;
+$tertiary-color: #82C3D9;
+$button-color: #C2E7DA;
+$background-color: #F1FFE7;
+
+
+@mixin breakpoint($min-width) {
+  @media only screen and (min-width: $min-width) {
+    @content;
+  }
+}
+
+@mixin breakpoint-small {
+  @include breakpoint(768px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-large {
+  @include breakpoint(1280px) {
+    @content;
+  }
+}

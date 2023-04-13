@@ -13,18 +13,20 @@ export default function SignInPage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	async function handleSignIn (e) {
+	async function handleSignIn(e) {
 		e.preventDefault();
 
 		try {
-			const user = await database.SignIn(emailRef.current.value, passwordRef.current.value);
+			const user = await database.SignIn(
+				emailRef.current.value,
+				passwordRef.current.value
+			);
 			const userData = {
 				id: user.uid,
-				displayName: user.displayName
-			}
+				displayName: user.displayName,
+			};
 			dispatch(logIn(userData));
 			navigate('/settings');
-
 		} catch (error) {
 			console.error(error);
 			setErrorMessages(error);
@@ -33,8 +35,7 @@ export default function SignInPage() {
 
 	return (
 		<PageContainer>
-			<div>Sign In Page</div>
-			<NavLink to='/signup'>Need to create an account?</NavLink>
+			<h1 className='barh1'>Sign In</h1>
 
 			{/* CONDITIONALLY DISPLAY ERROR MESSAGES */}
 			{errorMessages.length > 0 && (
@@ -48,7 +49,7 @@ export default function SignInPage() {
 				</div>
 			)}
 
-			<form onSubmit={handleSignIn}>
+			<form onSubmit={handleSignIn} className='signInOutForm'>
 				<p>
 					<label>
 						Email:
@@ -71,6 +72,7 @@ export default function SignInPage() {
 					</label>
 				</p>
 				<button type='submit'>Sign In</button>
+				<NavLink to='/signup'>Need to create an account?</NavLink>
 			</form>
 		</PageContainer>
 	);

@@ -91,14 +91,14 @@ export default function QuizComponent({
 			{isLoading && <div>Loading...</div>}
 			{!isLoading && (
 				<>
-					<h1>{title}</h1>
+					<h1 className='barh1'>{title}</h1>
 					<div>Created By: {authorDisplayName}</div>
 					{/* Create the quiz questions with the Array.map() and loop over them */}
 					{questions.map((question, i) => (
 						<div key={'q' + i}>
-							<h3>
+							<h2>
 								Q{i + 1}. {question.questionText}
-							</h3>
+							</h2>
 
 							{question.answers.map((answer, index) => (
 								<div key={'a' + answer.id}>

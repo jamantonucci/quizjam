@@ -4,6 +4,7 @@ import PageContainer from '../../components/PageContainer';
 import * as database from '../../database';
 import { logIn } from '../../redux/userSlice';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 export default function SignUpPage() {
 	const [errorMessages, setErrorMessages] = useState([]);
@@ -54,7 +55,7 @@ export default function SignUpPage() {
 	}
 	return (
 		<PageContainer>
-			<div>Register</div>
+			<h1 className='barh1'>Sign Up</h1>
 
 			{/* CONDITIONALLY DISPLAY ERROR MESSAGES */}
 			{errorMessages.length > 0 && (
@@ -68,7 +69,7 @@ export default function SignUpPage() {
 				</div>
 			)}
 
-			<form onSubmit={handleSignUp}>
+			<form onSubmit={handleSignUp} className='signInOutForm'>
 				<p>
 					<label>
 						Email:{' '}
@@ -103,6 +104,7 @@ export default function SignUpPage() {
 				</p>
 
 				<button type='submit'>Sign Up</button>
+				<NavLink to='/signin'>Already have an account?</NavLink>
 			</form>
 		</PageContainer>
 	);

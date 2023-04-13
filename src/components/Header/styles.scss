@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: $primary-color;
+	height: 60px;
+  padding: 5px 10px;
+  margin-bottom: 0;
+
+	.headerTitle {
+		font-family: $title-font;
+    font-size: 32px;
+    text-decoration: none;
+    color: $button-color;
+	}
+
+  .headerUser {
+    text-decoration: none;
+    color: $button-color;
+    display: flex;
+    align-items: center;
+
+    svg {
+      color: $button-color;
+      font-size: 32px;
+      padding: 5px;
+    }
+  }
+
+  
+}

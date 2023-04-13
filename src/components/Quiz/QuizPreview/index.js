@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as database from '../../../database';
 import { Link } from 'react-router-dom';
+import './styles.scss';
 
 export default function QuizPreview({
 	id,
@@ -20,12 +21,14 @@ export default function QuizPreview({
 	}, []);
 
 	return (
-		<div >
-				<Link to={'/quiz/' + id}>
+		<div className='quizPreviewContainer'>
+				<Link to={'/quiz/' + id} className='quizPreview'>
 					<h3>{title}</h3>
-					<p>Author: {authorDisplayName}</p>
-					<p>Questions: {questions.length}</p>
-					<p>Possible Results: {results.length}</p>
+					<p className='authorField'>Author: {authorDisplayName}</p>
+					<div className='quizPreviewInfo'>
+						<span>Questions: <strong>{questions.length}</strong></span>
+						<span>Possible Results: <strong>{results.length}</strong></span>
+					</div>
 				</Link> 
 		</div>
 	);

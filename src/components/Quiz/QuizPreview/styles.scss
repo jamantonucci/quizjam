@@ -1,0 +1,37 @@
+@import '../../../styles/variables.scss';
+
+.quizPreviewContainer {
+  background-color: $tertiary-color;
+  border-radius: 25px;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 10px 30px;
+  box-shadow: 2px 3px 7px RGBA(26, 27, 65, 0.6);
+
+  &:hover {
+    background-color: $button-color;
+  }
+}
+
+.quizPreview {
+  text-decoration: none;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .authorField {
+    margin-top: 0;
+    opacity: 0.85;
+    color: $primary-color;
+    font-size: 12px;
+  }
+
+  .quizPreviewInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: $primary-color;
+  }
+}
