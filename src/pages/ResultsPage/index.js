@@ -16,15 +16,17 @@ export default function ResultsPage() {
 
 	return (
 		<PageContainer>
-			<QuizResult quiz={quiz} result={result} />
+			<div>
+				<QuizResult quiz={quiz} result={result} />
 
-			<div className='results-nav'>
-				<Link to={'/quiz/' + quizID} className='linkbutton'>
-					Retake Quiz
-				</Link>
-				<Link to='/' className='linkbutton'>
-					Back to Home
-				</Link>
+				<div className='results-nav'>
+					<Link to={'/quiz/' + quizID} className='linkbutton'>
+						Retake Quiz
+					</Link>
+					<Link to='/' className='linkbutton'>
+						Back to Home
+					</Link>
+				</div>
 			</div>
 		</PageContainer>
 	);

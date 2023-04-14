@@ -1,5 +1,6 @@
 import Header from './components/Header';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import HomePage from './pages/HomePage';
 import QuizPage from './pages/QuizPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -16,6 +17,7 @@ import { setQuizzes } from './redux/quizSlice';
 export default function App() {
 	const [isLoading, setIsLoading] = useState(true);
 	const dispatch = useDispatch();
+	const location = useLocation();
 
 	useEffect(() => {
 		(async () => {
@@ -32,27 +34,29 @@ export default function App() {
 			{isLoading && <div>Loading...</div>}
 
 			{!isLoading && (
-				<Routes>
-					{/* Home Page */}
-					<Route path='/' element={<HomePage />} />
+				<AnimatePresence>
+					<Routes location={location} key={location.pathname}>
+						{/* Home Page */}
+						<Route path='/' element={<HomePage />} />
 
-					{/* Quiz - Taking */}
-					<Route path='/quiz/:id' element={<QuizPage />} />
-					<Route path='/quiz/result/:id' element={<ResultsPage />} />
+						{/* Quiz - Taking */}
+						<Route path='/quiz/:id' element={<QuizPage />} />
+						<Route path='/quiz/result/:id' element={<ResultsPage />} />
 
-					{/* Quiz - Creating */}
-					<Route path='/create' element={<CreatePage />} />
+						{/* Quiz - Creating */}
+						<Route path='/create' element={<CreatePage />} />
 
-					{/* Sign In/Sign Up */}
-					<Route path='/signin' element={<SignInPage />} />
-					<Route path='/signup' element={<SignUpPage />} />
+						{/* Sign In/Sign Up */}
+						<Route path='/signin' element={<SignInPage />} />
+						<Route path='/signup' element={<SignUpPage />} />
 
-					{/* User Page */}
-					<Route path='/settings' element={<UserPage />} />
+						{/* User Page */}
+						<Route path='/settings' element={<UserPage />} />
 
-					{/* 404 */}
-					<Route path='*' element={<NotFoundPage />} />
-				</Routes>
+						{/* 404 */}
+						<Route path='*' element={<NotFoundPage />} />
+					</Routes>
+				</AnimatePresence>
 			)}
 		</>
 	);
