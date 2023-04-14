@@ -56,6 +56,7 @@ export default function CreateQuiz() {
 	]);
 	const [errorMessages, setErrorMessages] = useState([]);
 	const [showSuccess, setShowSuccess] = useState(false);
+	const loggedIn = useSelector((state) => state.user.loggedIn);
 
 	// HANDLING FORM SUBMISSION
 	const handleFormSubmit = async (event) => {
@@ -141,6 +142,8 @@ export default function CreateQuiz() {
 	};
 
 	return (
+
+		
 		<div className='createQuizComponent'>
 			<h1>Create New Quiz</h1>
 

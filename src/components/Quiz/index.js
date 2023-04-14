@@ -127,7 +127,7 @@ export default function QuizComponent({
 					</h1>
 					{/* Create the quiz questions with the Array.map() and loop over them */}
 					{questions.map((question, i) => (
-						<div key={'q' + i}>
+						<div key={'q' + i} className='quizComponentQuestion'>
 							<h2>
 								Q{i + 1}. {question.questionText}
 							</h2>
