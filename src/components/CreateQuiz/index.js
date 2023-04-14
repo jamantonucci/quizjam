@@ -233,7 +233,7 @@ export default function CreateQuiz() {
 										setResults(newResults);
 									}}
 									value={result.desc}
-									maxLength={255}
+									maxLength={1024}
 									// required={true}
 									placeholder='You are red because...'
 								/>
