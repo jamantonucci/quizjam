@@ -4,6 +4,7 @@ import ValidateNewQuiz from './validate';
 import * as database from '../../database';
 import './styles.scss';
 import { useSelector } from 'react-redux';
+import { TiDelete } from 'react-icons/ti';
 
 export default function CreateQuiz() {
 	const [title, setTitle] = useState('');
@@ -158,6 +159,7 @@ export default function CreateQuiz() {
 			{/* CONDITIONALLY DISPLAY SUCCESS MESSAGE */}
 			{showSuccess && <div>Quiz created successfully!</div>}
 
+			{/* BASIC INFO */}
 			<form onSubmit={handleFormSubmit}>
 				<h2 className='h2bar'>Basic Info</h2>
 				<div>
@@ -186,7 +188,12 @@ export default function CreateQuiz() {
 				<div>
 					{results.map((result, index) => (
 						<div key={index} className='result'>
-							<h3>Result {index + 1}</h3>
+							<h3>
+								Result {index + 1}
+								<TiDelete
+									onClick={(event) => handleDeleteResult(event, result.id)}
+								/>
+							</h3>
 
 							{/* Result Title Input */}
 							<label>
@@ -231,11 +238,6 @@ export default function CreateQuiz() {
 									placeholder='You are red because...'
 								/>
 							</label>
-
-							{/* Delete Result Button */}
-							<button onClick={(event) => handleDeleteResult(event, result.id)}>
-								Delete
-							</button>
 						</div>
 					))}
 					{/* New Result Button */}
@@ -245,11 +247,15 @@ export default function CreateQuiz() {
 				{/* QUESTION INPUT */}
 				<h2 className='h2bar'>Questions</h2>
 				<p>Your quiz needs at least two questions.</p>
-
 				<div>
 					{questions.map((question, questionIndex) => (
 						<div key={questionIndex} className='question'>
-							<h3>Question {questionIndex + 1}</h3>
+							<h3>
+								Question {questionIndex + 1}{' '}
+								<TiDelete
+									onClick={(event) => handleDeleteQuestion(event, question.id)}
+								/>
+							</h3>
 
 							{/* Question Text Input */}
 							<label>
@@ -276,7 +282,9 @@ export default function CreateQuiz() {
 							<div>
 								{question.answers.map((answer, index) => (
 									<div key={index} className='answer'>
-										<h4>Answer {index + 1}</h4>
+										<h4>Answer {index + 1} <TiDelete 											onClick={(event) =>
+												handleDeleteAnswer(event, questionIndex, answer.id)
+											}/></h4>
 										<label>
 											Answer:
 											<input
@@ -313,14 +321,6 @@ export default function CreateQuiz() {
 												))}
 											</select>
 										</label>
-										{/* Delete Answer Button */}
-										<button
-											onClick={(event) =>
-												handleDeleteAnswer(event, questionIndex, answer.id)
-											}
-										>
-											Delete Answer {index + 1}
-										</button>
 									</div>
 								))}
 							</div>
@@ -329,13 +329,6 @@ export default function CreateQuiz() {
 								onClick={(event) => handleAddAnswer(event, questionIndex)}
 							>
 								Add New Answer
-							</button>
-
-							{/* Delete Question Button */}
-							<button
-								onClick={(event) => handleDeleteQuestion(event, question.id)}
-							>
-								Delete Question {questionIndex + 1}
 							</button>
 						</div>
 					))}

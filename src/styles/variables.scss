@@ -1,27 +1,38 @@
-$title-font: "Gloria Hallelujah", cursive;
-$body-font: "Roboto", sans-serif;
+$title-font: 'Gloria Hallelujah', cursive;
+$body-font: 'Roboto', sans-serif;
 
-$primary-color: #1A1B41;
-$secondary-color: #CC3363;
-$tertiary-color: #82C3D9;
-$button-color: #C2E7DA;
-$background-color: #F1FFE7;
+$primary-color: #1a1b41;
+$secondary-color: #cc3363;
+$tertiary-color: #82c3d9;
+$button-color: #c2e7da;
+$background-color: #f1ffe7;
 
+@mixin boxshadow() {
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+@mixin buttonshadow() {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+@mixin answershadow() {
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
 
 @mixin breakpoint($min-width) {
-  @media only screen and (min-width: $min-width) {
-    @content;
-  }
+	@media only screen and (min-width: $min-width) {
+		@content;
+	}
 }
 
 @mixin breakpoint-small {
-  @include breakpoint(768px) {
-    @content;
-  }
+	@include breakpoint(768px) {
+		@content;
+	}
 }
 
 @mixin breakpoint-large {
-  @include breakpoint(1280px) {
-    @content;
-  }
+	@include breakpoint(1280px) {
+		@content;
+	}
 }

@@ -4,6 +4,7 @@ import * as database from '../../database';
 import { useNavigate } from 'react-router-dom';
 import { logOut, changeDisplayName } from '../../redux/userSlice';
 import { useState } from 'react';
+import './styles.scss';
 
 export default function UserPage() {
 	const [showChangeDisplayName, setShowChangeDisplayName] = useState(false);
@@ -41,18 +42,21 @@ export default function UserPage() {
 	return (
 		<PageContainer>
 			<h1>User Settings</h1>
-			<div>
-				Display Name:
-				{!showChangeDisplayName && <span>{displayName}</span>}
-				{showChangeDisplayName && (
-					<input
-						type='text'
-						value={displayName}
-						onChange={(e) => setDisplayName(e.target.value)}
-						minLength={3}
-						maxLength={50}
-					></input>
-				)}
+			<div  className='userSettings'>
+				<label>
+					Display Name:
+				</label>
+					{!showChangeDisplayName && <span> {displayName}</span>}
+					{showChangeDisplayName && (
+						<input
+							type='text'
+							value={displayName}
+							onChange={(e) => setDisplayName(e.target.value)}
+							minLength={3}
+							maxLength={50}
+						></input>
+					)}
+
 				<button onClick={handleChangeDisplayName}>Change</button>
 			</div>
 			<div>

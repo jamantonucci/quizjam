@@ -5,6 +5,7 @@ import { HiUser } from 'react-icons/hi';
 
 export default function Header() {
 	const username = useSelector((state) => state.user.username);
+	const loggedIn = useSelector((state) => state.user.loggedIn);
 
 	return (
 		<>
@@ -12,8 +13,18 @@ export default function Header() {
 				<NavLink to='/' className='headerTitle'>
 					QuizJam
 				</NavLink>
-
-					<NavLink to='/signin' className='headerUser'><HiUser /> {username}</NavLink>
+				{loggedIn && (
+					<NavLink to='/settings' className='headerUser'>
+						<HiUser />
+						{username}
+					</NavLink>
+				)}
+				{!loggedIn && (
+					<NavLink to='/signin' className='headerUser'>
+						<HiUser />
+						Sign In
+					</NavLink>
+				)}
 			</header>
 		</>
 	);

@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.userSettings {
+	text-align: center;
+
+	label {
+		display: block;
+		margin: 0.5rem;
+		font-size: 1.2rem;
+	}
+
+	input {
+		display: block;
+		width: 50%;
+		font-size: 1.2rem !important;
+		border: none;
+		padding: 0.4rem 1rem;
+		margin: 0.5rem auto 2rem;
+		border-radius: 25px;
+	}
+}

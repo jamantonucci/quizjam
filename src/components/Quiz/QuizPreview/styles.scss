@@ -5,8 +5,7 @@
   border-radius: 25px;
   max-width: 500px;
   margin: 30px auto;
-  padding: 10px 30px;
-  box-shadow: 2px 3px 7px RGBA(26, 27, 65, 0.6);
+  @include boxshadow;
   transition: 200ms;
 
   &:hover {
@@ -18,19 +17,26 @@
   text-decoration: none;
 
   h3 {
-    margin-top: 0;
-    margin-bottom: 0;
     font-size: 1.5rem;
+    background-color: $secondary-color;
+    color: white;
+    margin: 0;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    padding: 0.3rem 1rem;
+  }
+
+  .quizPreviewInfo {
+    padding: 1rem;
   }
 
   .authorField {
     margin-top: 0;
     opacity: 0.85;
     color: $primary-color;
-    font-size: 0.9rem;
   }
 
-  .quizPreviewInfo {
+  .quizPreviewStats {
     display: flex;
     justify-content: space-between;
     font-size: 1.1rem;

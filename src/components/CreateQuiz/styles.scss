@@ -1,6 +1,11 @@
 @import '../../styles/variables.scss';
 
 .createQuizComponent {
+	
+	.question, .result, .answer {
+		@include boxshadow;
+	}
+
 	h1 {
 		margin-bottom: 0;
 	}
@@ -10,12 +15,13 @@
   }
 
 	.h2bar {
-		width: 100%;
 		background-color: $tertiary-color;
 		color: $primary-color;
 		font-family: $title-font;
 		margin-top: 0;
 		padding: 0 10px;
+
+		@include boxshadow;
 	}
 
 	.result, .question {
@@ -35,12 +41,26 @@
 		h3 {
 			width: 100%;
 			background-color: $secondary-color;
-			padding: 0;
+			padding: 0.5rem 2rem;
+			box-sizing: border-box;
 			margin-top: 0;
 			border-top-right-radius: 15px;
 			border-top-left-radius: 15px;
 			text-align: center;
 			color: white;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			svg {
+				font-size: 2rem;
+				cursor: pointer;
+				transition: 200ms;
+
+				&:hover {
+					color: black;
+				}
+			}
 		}
 
 		input {
@@ -51,24 +71,42 @@
   .answer {
     width: 90%;
     margin: 0 auto 1rem;
-    border: 1px dashed black;
     border-radius: 10px;
     padding: 0;
+		background-color: rgb(255, 253, 239);
+
+		input {
+			background-color: rgb(255, 253, 239);
+		}
 
     h4 {
       margin: 0;
       font-weight: normal;
       background-color: $tertiary-color;
-      padding: 3px 0;
+      padding: 0.3rem 1rem;
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
       text-align: center;
       font-size: 1.1rem;
+			color: $primary-color;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			svg {
+				font-size: 2rem;
+				cursor: pointer;
+				transition: 200ms;
+
+				&:hover {
+					color: white;
+				}
+			}
     }
 
     select {
-      font-size: 1.1rem;
-      background-color: $button-color;
+      font-size: 1rem;
+      background-color: rgb(255, 253, 239);
       display: block;
       border: none;
 			border-bottom: 2px dashed rgba(0, 0, 0, 0.664);
@@ -92,6 +130,36 @@
 			border: none;
 			border-bottom: 2px dashed rgba(0, 0, 0, 0.664);
 			margin: 10px 0px;
+		}
+	}
+
+	button {
+		background-color: $secondary-color;
+		color: white;
+		width: 100%;
+		font-size: 1.2rem;
+		transition: 200ms;
+		opacity: 0.65;
+
+		&:hover {
+			opacity: 1;
+			background-color: $secondary-color;
+		}
+	}
+
+	.question {
+		padding-top: 0;
+		padding-bottom: 0.5rem;
+
+		button {
+			background-color: $tertiary-color;
+			color: black;
+			opacity: 0.6;
+
+			&:hover {
+				opacity: 1;
+				background-color: $tertiary-color;
+			}
 		}
 	}
 }

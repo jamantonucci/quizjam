@@ -50,6 +50,7 @@ export default function QuizComponent({
 
 	useEffect(() => {
 		setQuestionsCompleted(countQuestionsCompleted());
+		// eslint-disable-next-line
 	}, [quizInProgress]);
 
 	const handleAnswerChange = (event) => {

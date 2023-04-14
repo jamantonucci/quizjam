@@ -38,10 +38,12 @@
 		&:has(input:checked) {
 			background-color: $tertiary-color;
 			font-size: 1.15rem;
+			@include answershadow;
 		}
 
 		&:hover {
 			background-color: $button-color;
+			@include answershadow;
 		}
 
 		input {
