@@ -46,6 +46,10 @@ h2 {
 	font-weight: normal;
 }
 
+.centeredh2 {
+  text-align: center;
+}
+
 h3 {
   color: $primary-color;
   font-family: $body-font;
@@ -57,11 +61,13 @@ h3 {
 	background-color: $button-color;
 	padding: 10px 20px;
 	border-radius: 25px;
-  margin: 10px;
+  margin: 10px auto;
 	text-decoration: none;
 	color: $primary-color;
   border: none;
   font-size: 16px;
+  display: block;
+  max-width: 50%;
 
 	&:hover {
 		background-color: $tertiary-color;
@@ -69,7 +75,8 @@ h3 {
 }
 
 .full-width-button {
-  width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
   margin: 0;
   border-radius: 0;
   font-size: 1.5rem;
@@ -79,16 +86,6 @@ h3 {
 
   &:disabled {
     opacity: 0.5;
-  }
-}
-
-button {
-  display: block;
-}
-
-.page {
-  main {
-    display: flex;
   }
 }
 
