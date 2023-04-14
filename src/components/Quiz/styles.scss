@@ -1,0 +1,66 @@
+@import '../../styles/variables.scss';
+
+.quizComponent {
+	h1 {
+    padding: 0;
+    padding-top: 10px;
+
+		.author {
+			font-size: 0.9rem;
+			margin: 0;
+		}
+
+    .progress-bar {
+      width: 100%;
+      background-color: $background-color;
+      height: 0.5rem;
+      margin-bottom: 0;
+
+      .progress-bar-progress {
+        background-color: $secondary-color;
+        height: 0.5rem;
+        transition: width 1s;
+        opacity: 0.5;
+      }
+    }
+	}
+
+	.answer {
+		width: 95%;
+		margin: auto;
+		display: block;
+		padding: 20px;
+		font-size: 1.1rem;
+		transition: 200ms;
+		transition: 500ms;
+
+		// Targets the parent (ie. label) of any checked radio box and highlights it
+		&:has(input:checked) {
+			background-color: $tertiary-color;
+			font-size: 1.15rem;
+		}
+
+		&:hover {
+			background-color: $button-color;
+		}
+
+		input {
+			opacity: 0;
+			width: 0;
+		}
+	}
+
+  .submit-button {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    font-size: 1.5rem;
+    background-color: $secondary-color;
+    color: white;
+    transition: 500ms;
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@import '../../styles/variables.scss';
+
+.results-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  
+  .linkbutton {
+    display: block;
+    text-align: center;
+    max-width: 50%;
+  }
+}

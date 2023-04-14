@@ -4,7 +4,6 @@ import './styles.scss';
 import { HiUser } from 'react-icons/hi';
 
 export default function Header() {
-	const loggedIn = useSelector((state) => state.user.loggedIn);
 	const username = useSelector((state) => state.user.username);
 
 	return (
