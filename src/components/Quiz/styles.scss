@@ -49,18 +49,4 @@
 			width: 0;
 		}
 	}
-
-  .submit-button {
-    width: 100%;
-    margin: 0;
-    border-radius: 0;
-    font-size: 1.5rem;
-    background-color: $secondary-color;
-    color: white;
-    transition: 500ms;
-
-    &:disabled {
-      opacity: 0.5;
-    }
-  }
 }

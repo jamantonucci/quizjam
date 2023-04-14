@@ -154,7 +154,7 @@ export default function QuizComponent({
 						type='submit'
 						onClick={handleSubmitQuiz}
 						disabled={!(questionsCompleted === questions.length)}
-						className='submit-button'
+						className='full-width-button'
 					>
 						{(questionsCompleted === questions.length) && 'Score Quiz'}
 						{!(questionsCompleted === questions.length) && (<span>{questions.length - questionsCompleted} question{!(questionsCompleted - questions.length === 1) && 's'} left</span>)}

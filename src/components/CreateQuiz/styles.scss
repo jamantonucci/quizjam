@@ -1,0 +1,97 @@
+@import '../../styles/variables.scss';
+
+.createQuizComponent {
+	h1 {
+		margin-bottom: 0;
+	}
+
+  input {
+    width: 70%;
+  }
+
+	.h2bar {
+		width: 100%;
+		background-color: $tertiary-color;
+		color: $primary-color;
+		font-family: $title-font;
+		margin-top: 0;
+		padding: 0 10px;
+	}
+
+	.result, .question {
+		width: 90%;
+		margin: 0 auto 1.5rem;
+		background-color: $button-color;
+		border-radius: 15px;
+
+		label {
+			font-size: 1.1rem;
+
+			input {
+				font-size: 1rem;
+			}
+		}
+
+		h3 {
+			width: 100%;
+			background-color: $secondary-color;
+			padding: 0;
+			margin-top: 0;
+			border-top-right-radius: 15px;
+			border-top-left-radius: 15px;
+			text-align: center;
+			color: white;
+		}
+
+		input {
+			background-color: $button-color;
+		}
+	}
+
+  .answer {
+    width: 90%;
+    margin: 0 auto 1rem;
+    border: 1px dashed black;
+    border-radius: 10px;
+    padding: 0;
+
+    h4 {
+      margin: 0;
+      font-weight: normal;
+      background-color: $tertiary-color;
+      padding: 3px 0;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    select {
+      font-size: 1.1rem;
+      background-color: $button-color;
+      display: block;
+      border: none;
+			border-bottom: 2px dashed rgba(0, 0, 0, 0.664);
+      margin: 1rem 0;
+      color: black;
+      padding: 5px;
+
+    }
+
+  }
+
+	label {
+		font-size: 1.2rem;
+		display: block;
+		padding: 10px;
+
+		input {
+			display: block;
+			font-size: 1.2rem;
+			background-color: $background-color;
+			border: none;
+			border-bottom: 2px dashed rgba(0, 0, 0, 0.664);
+			margin: 10px 0px;
+		}
+	}
+}

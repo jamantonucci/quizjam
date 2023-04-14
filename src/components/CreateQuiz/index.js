@@ -2,6 +2,8 @@ import { useState } from 'react';
 import uuid from 'react-uuid';
 import ValidateNewQuiz from './validate';
 import * as database from '../../database';
+import './styles.scss';
+import { useSelector } from 'react-redux';
 
 export default function CreateQuiz() {
 	const [title, setTitle] = useState('');
@@ -66,8 +68,8 @@ export default function CreateQuiz() {
 			title,
 			author: user.id,
 			results,
-			questions
-		}
+			questions,
+		};
 
 		// Validate data
 		const validate = ValidateNewQuiz(quiz);
@@ -77,8 +79,7 @@ export default function CreateQuiz() {
 			await database.SaveQuizToDb(quiz);
 			setShowSuccess(true);
 		}
-
-	}
+	};
 
 	// FUNCTIONS FOR HANDLING RESULTS
 	const handleAddResult = (event) => {
@@ -139,12 +140,13 @@ export default function CreateQuiz() {
 	};
 
 	return (
-		<>
+		<div className='createQuizComponent'>
 			<h1>Create New Quiz</h1>
 
 			{/* CONDITIONALLY DISPLAY ERROR MESSAGES */}
 			{errorMessages.length > 0 && (
-				<div>Something went wrong:
+				<div>
+					Something went wrong:
 					<ul>
 						{errorMessages.map((error, index) => (
 							<li key={index}>{error}</li>
@@ -154,14 +156,10 @@ export default function CreateQuiz() {
 			)}
 
 			{/* CONDITIONALLY DISPLAY SUCCESS MESSAGE */}
-			{showSuccess && (
-				<div>Quiz created successfully!</div>
-			)}
-
-
+			{showSuccess && <div>Quiz created successfully!</div>}
 
 			<form onSubmit={handleFormSubmit}>
-				<h2>Basic Info</h2>
+				<h2 className='h2bar'>Basic Info</h2>
 				<div>
 					<label>
 						Title:
@@ -176,14 +174,18 @@ export default function CreateQuiz() {
 							// required={true}
 						/>
 					</label>
+					<label>
+						Author:
+						<p>{useSelector((state) => state.user.username)}</p>
+					</label>
 				</div>
 
 				{/* RESULT INPUT */}
-				<h2>Possible Results</h2>
+				<h2 className='h2bar'>Possible Results</h2>
 				<p>Your quiz needs at least two results.</p>
 				<div>
 					{results.map((result, index) => (
-						<div key={index}>
+						<div key={index} className='result'>
 							<h3>Result {index + 1}</h3>
 
 							{/* Result Title Input */}
@@ -241,12 +243,12 @@ export default function CreateQuiz() {
 				</div>
 
 				{/* QUESTION INPUT */}
-				<h2>Questions</h2>
+				<h2 className='h2bar'>Questions</h2>
 				<p>Your quiz needs at least two questions.</p>
 
 				<div>
 					{questions.map((question, questionIndex) => (
-						<div key={questionIndex}>
+						<div key={questionIndex} className='question'>
 							<h3>Question {questionIndex + 1}</h3>
 
 							{/* Question Text Input */}
@@ -273,9 +275,10 @@ export default function CreateQuiz() {
 							{/* Answer Input */}
 							<div>
 								{question.answers.map((answer, index) => (
-									<div key={index}>
+									<div key={index} className='answer'>
+										<h4>Answer {index + 1}</h4>
 										<label>
-											Answer {index + 1}
+											Answer:
 											<input
 												type='text'
 												onChange={(e) => {
@@ -339,9 +342,11 @@ export default function CreateQuiz() {
 					{/* New Question Button */}
 					<button onClick={handleAddQuestion}>Add Question</button>
 
-					<button type='submit'>Create</button>
+					<button type='submit' className='full-width-button'>
+						Create
+					</button>
 				</div>
 			</form>
-		</>
+		</div>
 	);
 }
