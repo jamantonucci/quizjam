@@ -10,7 +10,6 @@ import { MdError } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 
 export default function CreateQuiz() {
-	const user = database.GetCurrentUserInfo();
 	const [title, setTitle] = useState('');
 	const [results, setResults] = useState([
 		{
@@ -70,11 +69,26 @@ export default function CreateQuiz() {
 	const [quizComplete, setQuizComplete] = useState(false);
 	const [quizIsSaving, setQuizIsSaving] = useState(false);
 	const navigate = useNavigate();
+	const isLoggedIn = useSelector((state) => state.user.loggedIn);
+
+
+	useEffect(() => {
+		(async () => {
+			if (isLoggedIn) {
+				const user = await database.GetCurrentUserInfo();
+			} else {
+				const user = {
+					id: 'aaa',
+					displayName: 'Guest'
+				}
+			}
+		})();
+	})
 
 	const [quiz, setQuiz] = useState({
 		id: uuid(),
 		title,
-		author: user.id,
+		author: '',
 		results,
 		questions,
 	});
@@ -86,8 +100,6 @@ export default function CreateQuiz() {
 		let newQuiz = { ...quiz };
 
 		newQuiz = {
-			id: quiz.id,
-			author: user.id,
 			title,
 			results,
 			questions,

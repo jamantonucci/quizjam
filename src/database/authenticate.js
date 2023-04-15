@@ -72,12 +72,18 @@ function IsUserLoggedIn() {
 }
 
 function GetCurrentUserInfo() {
-	const user = auth.currentUser;
+	try {
+			const user = auth.currentUser;
 	const data = {
 		id: user.uid,
 		displayName: user.displayName,
 	};
 	return data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+
 }
 
 async function GetDisplayNameFromId(id) {
