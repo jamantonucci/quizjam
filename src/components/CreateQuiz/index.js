@@ -70,21 +70,6 @@ export default function CreateQuiz() {
 	const [quizIsSaving, setQuizIsSaving] = useState(false);
 	const navigate = useNavigate();
 	const isLoggedIn = useSelector((state) => state.user.loggedIn);
-
-
-	useEffect(() => {
-		(async () => {
-			if (isLoggedIn) {
-				const user = await database.GetCurrentUserInfo();
-			} else {
-				const user = {
-					id: 'aaa',
-					displayName: 'Guest'
-				}
-			}
-		})();
-	})
-
 	const [quiz, setQuiz] = useState({
 		id: uuid(),
 		title,
@@ -93,6 +78,18 @@ export default function CreateQuiz() {
 		questions,
 	});
 
+	useEffect(() => {
+		(async () => {
+			if (isLoggedIn) {
+				const user = await database.GetCurrentUserInfo();
+				let newQuiz = { ...quiz };
+				newQuiz = {
+					author: user.id,
+				};
+				setQuiz(newQuiz);
+			}
+		})();
+	}, []);
 
 	// Runs function to validate quiz every time there is a change to
 	// title, results or questions.
@@ -122,7 +119,7 @@ export default function CreateQuiz() {
 				return prevState;
 			}
 		});
-	// eslint-disable-next-line
+		// eslint-disable-next-line
 	}, [title, results, questions]);
 
 	// Checks to see if quiz is completely valid every time there is a
@@ -135,7 +132,8 @@ export default function CreateQuiz() {
 			validate.questionLength === true &&
 			validate.resultsAssociated === true &&
 			validate.resultsCompleted === true &&
-			validate.titleLength === true
+			validate.titleLength === true &&
+			isLoggedIn === true
 		) {
 			setQuizComplete(true);
 		} else {
@@ -152,7 +150,6 @@ export default function CreateQuiz() {
 		console.log(savedQuizId);
 		setQuizIsSaving(false);
 		navigate('/');
-
 	};
 
 	// FUNCTIONS FOR HANDLING RESULTS
@@ -402,19 +399,11 @@ export default function CreateQuiz() {
 						<h2>Quiz Requirements</h2>
 						<ul>
 							<li className={'requirement-' + validate.titleLength}>
-								{validate.titleLength ? (
-									<IoCheckmarkCircle />
-								) : (
-									<MdError />
-								)}
+								{validate.titleLength ? <IoCheckmarkCircle /> : <MdError />}
 								Title is at least 5 characters long.
 							</li>
 							<li className={'requirement-' + validate.minimumResults}>
-								{validate.minimumResults ? (
-									<IoCheckmarkCircle />
-								) : (
-									<MdError />
-								)}
+								{validate.minimumResults ? <IoCheckmarkCircle /> : <MdError />}
 								There are at least two results.
 							</li>
 							<li className={'requirement-' + validate.resultsCompleted}>
@@ -434,19 +423,11 @@ export default function CreateQuiz() {
 								There are at least two questions.
 							</li>
 							<li className={'requirement-' + validate.questionLength}>
-								{validate.questionLength ? (
-									<IoCheckmarkCircle />
-								) : (
-									<MdError />
-								)}
+								{validate.questionLength ? <IoCheckmarkCircle /> : <MdError />}
 								Every question is at least 5 characters long.
 							</li>
 							<li className={'requirement-' + validate.minimumAnswers}>
-								{validate.minimumAnswers ? (
-									<IoCheckmarkCircle />
-								) : (
-									<MdError />
-								)}
+								{validate.minimumAnswers ? <IoCheckmarkCircle /> : <MdError />}
 								Each question has at least 1 answer.
 							</li>
 							<li className={'requirement-' + validate.resultsAssociated}>
@@ -457,6 +438,14 @@ export default function CreateQuiz() {
 								)}
 								Each answer has an associated result.
 							</li>
+							<li className={'requirement-' + isLoggedIn}>
+								{isLoggedIn ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								You must be logged in to save your quiz.
+							</li>
 						</ul>
 					</div>
 					<button
@@ -464,7 +453,7 @@ export default function CreateQuiz() {
 						className='full-width-button'
 						disabled={!quizComplete}
 					>
-						{quizIsSaving ? ('Saving...') : ('Create')}
+						{quizIsSaving ? 'Saving...' : 'Create'}
 					</button>
 				</div>
 			</form>
