@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import uuid from 'react-uuid';
 import ValidateNewQuiz from './validate';
 import * as database from '../../database';
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import { MdError } from 'react-icons/md';
+import { useNavigate } from 'react-router';
 
 export default function CreateQuiz() {
+	const user = database.GetCurrentUserInfo();
 	const [title, setTitle] = useState('');
 	const [results, setResults] = useState([
 		{
@@ -28,12 +32,12 @@ export default function CreateQuiz() {
 				{
 					id: uuid(),
 					answerText: '',
-					associatedResult: 0,
+					associatedResult: -1,
 				},
 				{
 					id: uuid(),
 					answerText: '',
-					associatedResult: 0,
+					associatedResult: -1,
 				},
 			],
 		},
@@ -44,43 +48,99 @@ export default function CreateQuiz() {
 				{
 					id: uuid(),
 					answerText: '',
-					associatedResult: 0,
+					associatedResult: -1,
 				},
 				{
 					id: uuid(),
 					answerText: '',
-					associatedResult: 0,
+					associatedResult: -1,
 				},
 			],
 		},
 	]);
-	const [errorMessages, setErrorMessages] = useState([]);
-	const [showSuccess, setShowSuccess] = useState(false);
-	const loggedIn = useSelector((state) => state.user.loggedIn);
+	const [validate, setValidate] = useState({
+		titleLength: false,
+		minimumResults: false,
+		resultsCompleted: false,
+		minimumQuestions: false,
+		questionLength: false,
+		minimumAnswers: false,
+		resultsAssociated: false,
+	});
+	const [quizComplete, setQuizComplete] = useState(false);
+	const [quizIsSaving, setQuizIsSaving] = useState(false);
+	const navigate = useNavigate();
 
-	// HANDLING FORM SUBMISSION
-	const handleFormSubmit = async (event) => {
-		event.preventDefault();
-		setShowSuccess(false);
+	const [quiz, setQuiz] = useState({
+		id: uuid(),
+		title,
+		author: user.id,
+		results,
+		questions,
+	});
 
-		const user = database.GetCurrentUserInfo();
 
-		const quiz = {
-			id: uuid(),
-			title,
+	// Runs function to validate quiz every time there is a change to
+	// title, results or questions.
+	useEffect(() => {
+		let newQuiz = { ...quiz };
+
+		newQuiz = {
+			id: quiz.id,
 			author: user.id,
+			title,
 			results,
 			questions,
 		};
 
-		// Validate data
-		const validate = ValidateNewQuiz(quiz);
-		setErrorMessages(validate);
+		setQuiz((prevState) => {
+			if (prevState !== newQuiz) {
+				return { ...prevState, ...newQuiz };
+			} else {
+				return prevState;
+			}
+		});
 
-		if (validate.length === 0) {
-			await database.SaveQuizToDb(quiz);
-			setShowSuccess(true);
+		const newValidate = ValidateNewQuiz(newQuiz);
+
+		setValidate((prevState) => {
+			if (prevState !== newValidate) {
+				return { ...prevState, ...newValidate };
+			} else {
+				return prevState;
+			}
+		});
+	// eslint-disable-next-line
+	}, [title, results, questions]);
+
+	// Checks to see if quiz is completely valid every time there is a
+	// change to the 'validate' state variable.
+	useEffect(() => {
+		if (
+			validate.minimumAnswers === true &&
+			validate.minimumQuestions === true &&
+			validate.minimumResults === true &&
+			validate.questionLength === true &&
+			validate.resultsAssociated === true &&
+			validate.resultsCompleted === true &&
+			validate.titleLength === true
+		) {
+			setQuizComplete(true);
+		} else {
+			setQuizComplete(false);
 		}
+	}, [validate]);
+
+	// HANDLING FORM SUBMISSION
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
+		setQuizIsSaving(true);
+
+		const savedQuizId = await database.SaveQuizToDb(quiz);
+		console.log(savedQuizId);
+		setQuizIsSaving(false);
+		navigate('/');
+
 	};
 
 	// FUNCTIONS FOR HANDLING RESULTS
@@ -105,11 +165,11 @@ export default function CreateQuiz() {
 				{
 					id: uuid(),
 					answerText: '',
-					associatedResult: 0,
+					associatedResult: -1,
 				},
 				{
 					answerText: '',
-					associatedResult: 0,
+					associatedResult: -1,
 				},
 			],
 		};
@@ -125,7 +185,7 @@ export default function CreateQuiz() {
 	// FUNCTIONS FOR HANDLING ANSWERS
 	const handleAddAnswer = (event, questionIndex) => {
 		event.preventDefault();
-		const newAnswer = { id: uuid(), answerText: '', associatedResult: 0 };
+		const newAnswer = { id: uuid(), answerText: '', associatedResult: -1 };
 		const newQuestions = [...questions];
 		newQuestions[questionIndex].answers.push(newAnswer);
 		setQuestions(newQuestions);
@@ -142,25 +202,8 @@ export default function CreateQuiz() {
 	};
 
 	return (
-
-		
 		<div className='createQuizComponent'>
 			<h1>Create New Quiz</h1>
-
-			{/* CONDITIONALLY DISPLAY ERROR MESSAGES */}
-			{errorMessages.length > 0 && (
-				<div>
-					Something went wrong:
-					<ul>
-						{errorMessages.map((error, index) => (
-							<li key={index}>{error}</li>
-						))}
-					</ul>
-				</div>
-			)}
-
-			{/* CONDITIONALLY DISPLAY SUCCESS MESSAGE */}
-			{showSuccess && <div>Quiz created successfully!</div>}
 
 			{/* BASIC INFO */}
 			<form onSubmit={handleFormSubmit}>
@@ -285,9 +328,14 @@ export default function CreateQuiz() {
 							<div>
 								{question.answers.map((answer, index) => (
 									<div key={index} className='answer'>
-										<h4>Answer {index + 1} <TiDelete 											onClick={(event) =>
-												handleDeleteAnswer(event, questionIndex, answer.id)
-											}/></h4>
+										<h4>
+											Answer {index + 1}{' '}
+											<TiDelete
+												onClick={(event) =>
+													handleDeleteAnswer(event, questionIndex, answer.id)
+												}
+											/>
+										</h4>
 										<label>
 											Answer:
 											<input
@@ -335,11 +383,76 @@ export default function CreateQuiz() {
 							</button>
 						</div>
 					))}
+
 					{/* New Question Button */}
 					<button onClick={handleAddQuestion}>Add Question</button>
-
-					<button type='submit' className='full-width-button'>
-						Create
+					<div className='quizRequirements'>
+						<h2>Quiz Requirements</h2>
+						<ul>
+							<li className={'requirement-' + validate.titleLength}>
+								{validate.titleLength ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								Title is at least 5 characters long.
+							</li>
+							<li className={'requirement-' + validate.minimumResults}>
+								{validate.minimumResults ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								There are at least two results.
+							</li>
+							<li className={'requirement-' + validate.resultsCompleted}>
+								{validate.resultsCompleted ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								Each result has a title and description.
+							</li>
+							<li className={'requirement-' + validate.minimumQuestions}>
+								{validate.minimumQuestions ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								There are at least two questions.
+							</li>
+							<li className={'requirement-' + validate.questionLength}>
+								{validate.questionLength ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								Every question is at least 5 characters long.
+							</li>
+							<li className={'requirement-' + validate.minimumAnswers}>
+								{validate.minimumAnswers ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								Each question has at least 1 answer.
+							</li>
+							<li className={'requirement-' + validate.resultsAssociated}>
+								{validate.resultsAssociated ? (
+									<IoCheckmarkCircle />
+								) : (
+									<MdError />
+								)}
+								Each answer has an associated result.
+							</li>
+						</ul>
+					</div>
+					<button
+						type='submit'
+						className='full-width-button'
+						disabled={!quizComplete}
+					>
+						{quizIsSaving ? ('Saving...') : ('Create')}
 					</button>
 				</div>
 			</form>

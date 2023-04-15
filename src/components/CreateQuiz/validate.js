@@ -1,48 +1,58 @@
 export default function ValidateNewQuiz(quiz) {
-  const validate = [];
+	const validate = {
+		titleLength: true,
+		minimumResults: true,
+		resultsCompleted: true,
+		minimumQuestions: true,
+		questionLength: true,
+		minimumAnswers: true,
+		resultsAssociated: true,
+	};
 
-  // VALIDATE BASIC INFO
-  if (quiz.title.length < 5) {
-    validate.push('Your quiz title must be at least 5 characters long.');
-  }
+	// VALIDATE BASIC INFO
+	if (quiz.title.length < 5) {
+		validate.titleLength = false;
+	}
 
-  // VALIDATE RESULTS
-  if (quiz.results.length < 2) {
-    validate.push('Your quiz must have at least two results.');
-  }
+	// VALIDATE RESULTS
+	if (quiz.results.length === 0) {
+		validate.resultsCompleted = false;
+	}
+	if (quiz.results.length < 2) {
+		validate.minimumResults = false;
+	} else {
+		validate.resultsCompleted = true;
+	}
+	quiz.results.forEach((result) => {
+		if (result.title === '' || result.desc === '') {
+			validate.resultsCompleted = false;
+		}
+	});
 
-  quiz.results.forEach((result) => {
-    if (result.title === '' || result.desc === '') {
-      validate.push('Results need both a title and a description.');
-    }
-  })
+	// VALIDATE QUESTIONS
+	if (quiz.questions.length < 2) {
+		validate.minimumQuestions = false;
+		validate.minimumAnswers = false;
+		validate.resultsAssociated = false;
+		validate.questionLength = false;
+	}
 
-  // VALIDATE QUESTIONS
-  if (quiz.questions.length < 2) {
-    validate.push('Your quiz must have at least two questions.');
-  }
+	quiz.questions.forEach((question) => {
+		if (question.questionText.length < 5) {
+			validate.questionLength = false;
+		}
 
-  // Looping through each question
-  quiz.questions.forEach((question) => {
-    
-    // Validate question legnth
-    if (question.questionText.length < 5) {
-      validate.push('Each question must be at least 5 characters long.')
-    }
+		if (question.answers.length >= 2) {
+			validate.minimumAnswers = true;
+			validate.resultsAssociated = true;
+		}
 
-    // Need at least 2 answers per question
-    if (question.answers.length < 2) {
-      validate.push('Each question must have at least two answers.');
-    }
+		question.answers.forEach((answer) => {
+			if (answer.associatedResult === -1) {
+				validate.resultsAssociated = false;
+			}
+		});
+	});
 
-    // Answers must be at least 5 characters long.
-    question.answers.forEach((answer) => {
-      if (answer.length < 5) {
-        validate.push('Each answer must be at least 5 characters long.');
-      }
-
-    })
-  })
-
-  return validate;
+	return validate;
 }

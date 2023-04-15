@@ -71,7 +71,6 @@ export default function QuizComponent({
 				count++;
 			}
 		});
-		console.log(questions.length - count);
 		return questions.length - count;
 	}
 
@@ -90,12 +89,10 @@ export default function QuizComponent({
 				}
 			});
 		});
-		console.log(quizResults);
 		const result = quizResults.reduce(function (prev, current) {
 			return prev.score > current.score ? prev : current;
 		});
 		dispatch(updateQuizInProgress(id));
-		console.log(result);
 
 		navigate('/quiz/result/' + result.id);
 	};

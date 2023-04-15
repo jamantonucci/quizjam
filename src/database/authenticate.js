@@ -62,6 +62,15 @@ async function ChangeDisplayName(displayName) {
 	}
 }
 
+function IsUserLoggedIn() {
+	const user = auth.currentUser;
+	if (user) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function GetCurrentUserInfo() {
 	const user = auth.currentUser;
 	const data = {
@@ -90,4 +99,5 @@ export {
 	ChangeDisplayName,
 	GetCurrentUserInfo,
 	GetDisplayNameFromId,
+	IsUserLoggedIn
 };

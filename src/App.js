@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import * as database from '../src/database';
 import { useDispatch } from 'react-redux';
 import { setQuizzes } from './redux/quizSlice';
+import { logIn } from './redux/userSlice';
 
 export default function App() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -24,9 +25,14 @@ export default function App() {
 			const quizzes = await database.GetQuizzesFromDb();
 			dispatch(setQuizzes(quizzes));
 			setIsLoading(false);
+			const isLoggedIn = await database.IsUserLoggedIn();
+			if (isLoggedIn) {
+				const userData = await database.GetCurrentUserInfo();
+				dispatch(logIn(userData));
+			}
 		})();
 		// eslint-disable-next-line
-	}, []);
+	});
 	return (
 		<>
 			<Header />

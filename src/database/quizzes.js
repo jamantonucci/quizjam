@@ -9,7 +9,7 @@ async function SaveQuizToDb(quiz) {
       results: quiz.results,
       questions: quiz.questions
     });
-    console.log('Doc written with ID: ', docRef.id);
+    return docRef.id;
   } catch (e) {
     console.error('Error adding document: ', e);
   }

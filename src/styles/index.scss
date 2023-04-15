@@ -26,7 +26,7 @@ body {
 
   @include breakpoint-small {
     .createQuizComponent {
-      .question, .result {
+      .question, .result, .quizRequirements {
         max-width: 70%;
       }
     }
