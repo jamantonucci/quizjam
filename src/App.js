@@ -20,6 +20,8 @@ export default function App() {
 	const dispatch = useDispatch();
 	const location = useLocation();
 
+	// Check Firebase Auth to see if user is logged in,
+	// dispatch to redux if so
 	useEffect(() => {
 		(async () => {
 			const quizzes = await database.GetQuizzesFromDb();

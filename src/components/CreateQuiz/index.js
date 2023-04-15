@@ -147,7 +147,6 @@ export default function CreateQuiz() {
 		setQuizIsSaving(true);
 
 		const savedQuizId = await database.SaveQuizToDb(quiz);
-		console.log(savedQuizId);
 		setQuizIsSaving(false);
 		navigate('/');
 	};
